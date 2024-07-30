@@ -1,56 +1,37 @@
 #include <iostream>
 
-using namespace std;
+class FixedPoint {
+public:
+    // Constant for fractional bits
+    static constexpr int FRACTIONAL_BITS = 8;
+    static constexpr int FIXED_POINT_SCALE = 1 << FRACTIONAL_BITS;
 
-class MyClass
-{
-     public:
-        int* data;
+    // Constructor from integer
+    explicit FixedPoint(int value) : value_(value * FIXED_POINT_SCALE) {}
 
-        // Constructor
-        MyClass(int value)
-        {
-            data = new int(value);
-            cout << "Constructor called" << endl;
-        }
+    // Constructor from floating-point
+    explicit FixedPoint(double value) : value_(value * FIXED_POINT_SCALE) {}
 
-        // Copy Constructor
-        MyClass(const MyClass &other)
-        {
-            data = new int(*(other.data));
-            cout << "Copy Constructor called" << endl;
-        }
+    // Convert to floating-point
+    float toFloat() const {
+        return value_ / FIXED_POINT_SCALE;
+    }
 
-        // Copy Assignment Operator
-        MyClass& operator=(const MyClass &other)
-        {
-            if (this != &other)
-            {
-                delete data;
-                data = new int(*(other.data));
-            }
-            cout << "Copy Assignment Operator called" << endl;
-            return *this;
-        }
+    // Convert to integer
+    int toInt() const {
+        return value_ / FIXED_POINT_SCALE;
+    }
 
-        // Destructor
-        ~MyClass()
-        {
-            delete data;
-            cout << "Destructor called" << endl;
-        }
+private:
+    int value_;
 };
 
-int main() {
-    MyClass obj1(10);           // Constructor called
-    MyClass obj2(obj1);         // Copy Constructor called
-    MyClass obj3(20);           // Constructor called
-    obj3 = obj1;                // Copy Assignment Operator called
-
-
-    int* p = new int; // allocates memory for a single int
-    *p = 5;
-    cout << *p << endl; // Output: 5
+int main()
+{
+    FixedPoint fp1(10);
+    FixedPoint fp2(42.42f);
     
+    std::cout << fp1.toFloat() << std::endl;
+    std::cout << fp2.toInt() << std::endl;
     return 0;
 }

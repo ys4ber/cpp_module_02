@@ -1,10 +1,10 @@
-NAME = ex01
+NAME = program
 
 CXX = c++
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 #-fsanitize=address -g3
 
-SRC  = main.cpp Fixed.cpp
+SRC  = test.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
@@ -20,9 +20,12 @@ $(NAME): $(OBJ)
 clean:
 	@rm -f $(OBJ)
 	@echo "\033[0;33mCleaned \033[0m"
+	@echo "\033[0;33m======================================\033[0m"
 
 fclean:
 	@rm -f $(NAME) $(OBJ)
 	@echo "\033[0;31mFcleaned \033[0m"
+	# @echo "\033[0;33m======================================\033[0m"
 
 re: fclean all clean
+	./program
