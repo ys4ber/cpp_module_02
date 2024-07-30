@@ -35,7 +35,6 @@ int Fixed::getRawBits() const
     return _value;
 }
 
-
 void Fixed::setRawBits(int const raw)
 {
     _value = raw;
@@ -43,7 +42,7 @@ void Fixed::setRawBits(int const raw)
 
 Fixed::Fixed(const int n)
 {
-    _value = n << _fractBits;
+    _value = n >> _fractBits;
 }
 
 Fixed::Fixed(const float n)
@@ -58,5 +57,5 @@ int Fixed::toInt() const
 
 float Fixed::toFloat() const
 {
-    return (_value / (1 << _fractBits));
+    return (_value / float(1 << _fractBits));
 }
